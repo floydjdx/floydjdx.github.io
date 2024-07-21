@@ -60,7 +60,6 @@ const createMessageManager = (appId, responseListener) => {
      * @param {(reason?: any) => void} reject 
      */
     sendMessage: (message) => {
-      console.log("sending message from client", message);
       return new Promise((resolve, reject) => {
         const messageId = getUniqueMessageId();
         const wrappedMessage = {
@@ -76,7 +75,8 @@ const createMessageManager = (appId, responseListener) => {
 };
 
 const createClient = async () => {
-  const appId = `app${Math.round(Math.random() * 100000)}`;
+  const search = new URLSearchParams(window.location.search);
+  const appId = search.get("appId");
   const responseListener = createResponseListener();
   const { sendMessage } = createMessageManager(appId, responseListener);
   const { functionNames } = await sendMessage({
