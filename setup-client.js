@@ -6,8 +6,8 @@ const createResponseListener = () => {
       return;
     }
 
-    const { messageId, value, error } = data;
-    if (!messageId) {
+    const { messageId, response } = data;
+    if (!messageId || !response) {
       return;
     }
 
@@ -17,10 +17,10 @@ const createResponseListener = () => {
       return;
     }
 
-    if (error) {
-      callTrackingMap[messageId].reject(error);
+    if (response.error) {
+      callTrackingMap[messageId].reject(response.error);
     } else {
-      callTrackingMap[messageId].resolve(value);
+      callTrackingMap[messageId].resolve(response.value);
     }
 
     delete callTrackingMap[messageId];
@@ -60,6 +60,7 @@ const createMessageManager = (appId, responseListener) => {
      * @param {(reason?: any) => void} reject 
      */
     sendMessage: (message) => {
+      console.log("sending message from client", message);
       return new Promise((resolve, reject) => {
         const messageId = getUniqueMessageId();
         const wrappedMessage = {
