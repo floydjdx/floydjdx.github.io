@@ -11,6 +11,8 @@ const createResponseListener = () => {
       return;
     }
 
+    console.log("client", data);
+
     const callHandler = callTrackingMap[messageId];
     if (!callHandler) {
       console.error(`No handler found for message ${messageId}`);
@@ -60,6 +62,7 @@ const createMessageManager = (appId, responseListener) => {
      * @param {(reason?: any) => void} reject 
      */
     sendMessage: (message) => {
+      console.log("client", {message});
       return new Promise((resolve, reject) => {
         const messageId = getUniqueMessageId();
         const wrappedMessage = {
@@ -77,6 +80,7 @@ const createMessageManager = (appId, responseListener) => {
 const createClient = async () => {
   const search = new URLSearchParams(window.location.search);
   const appId = search.get("appId");
+  console.log("client", {appId});
   const responseListener = createResponseListener();
   const { sendMessage } = createMessageManager(appId, responseListener);
   const { functionNames } = await sendMessage({
