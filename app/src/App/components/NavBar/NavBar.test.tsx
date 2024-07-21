@@ -16,14 +16,14 @@ describe("Page", () => {
           path: "/",
           title: "Home",
           showInNav: true,
-          content: []
+          content: [],
         },
         {
           path: "/",
           title: "Hidden Page",
           showInNav: false,
-          content: []
-        }
+          content: [],
+        },
       ],
     };
     const setBlog = jest.fn();
@@ -33,7 +33,7 @@ describe("Page", () => {
         <BlogProvider value={{ setBlog, blog }}>
           <NavBar/>
         </BlogProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     screen.getByText("Test Title");
@@ -49,7 +49,7 @@ describe("Page", () => {
           path: "/",
           title: "Home",
           showInNav: true,
-          content: []
+          content: [],
         },
       ],
     };
@@ -63,7 +63,7 @@ describe("Page", () => {
             <NavBar/>
           </EditModeProvider>
         </BlogProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     fireEvent.click(screen.getByTestId("add-page-button"));
@@ -75,17 +75,17 @@ describe("Page", () => {
           path: "/",
           title: "Home",
           showInNav: true,
-          content: []
+          content: [],
         },
         {
           path: "/page1",
           title: "Page 1",
           content: [
-            "Page 1"
-          ]
-        }
+            "Page 1",
+          ],
+        },
       ],
-    })
+    });
   });
 
   it("changes the blog title", () => {
@@ -96,8 +96,8 @@ describe("Page", () => {
           path: "/",
           title: "Home",
           showInNav: true,
-          content: []
-        }
+          content: [],
+        },
       ],
     };
     const setBlog = jest.fn((callback => { blog = callback(blog); }));
@@ -110,10 +110,10 @@ describe("Page", () => {
             <NavBar/>
           </EditModeProvider>
         </BlogProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
-    fireEvent.change(screen.getByTestId("blog-title-input"), { target: { value: "Updated Title"} });
+    fireEvent.change(screen.getByTestId("blog-title-input"), { target: { value: "Updated Title" } });
 
     expect(blog).toEqual({
       title: "Updated Title",
@@ -122,10 +122,10 @@ describe("Page", () => {
           path: "/",
           title: "Home",
           showInNav: true,
-          content: []
+          content: [],
         },
       ],
-    })
+    });
   });
 
   it("toggles edit mode", () => {
@@ -146,7 +146,7 @@ describe("Page", () => {
             <NavBar/>
           </EditModeProvider>
         </BlogProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     fireEvent.click(screen.getByTestId("edit-mode-button"));
@@ -169,7 +169,7 @@ describe("Page", () => {
             <NavBar/>
           </Theme>
         </BlogProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.queryByTestId("theme-wrapper")).toHaveClass("default");

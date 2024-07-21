@@ -19,8 +19,8 @@ describe("Page", () => {
           content: [
             "First paragraph text",
             "Second paragraph text",
-          ]
-        }
+          ],
+        },
       ],
     };
     const setBlog = jest.fn();
@@ -30,7 +30,7 @@ describe("Page", () => {
         <BlogProvider value={{ setBlog, blog }}>
           <Page/>
         </BlogProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     // Check to see that the page contents render
@@ -64,7 +64,7 @@ describe("Page", () => {
         <BlogProvider value={{ setBlog, blog }}>
           <Page/>
         </BlogProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     screen.getByText(text => text.includes("const foo = 123;"));
@@ -93,7 +93,7 @@ describe("Page", () => {
         <BlogProvider value={{ setBlog, blog }}>
           <Page/>
         </BlogProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 
@@ -110,14 +110,14 @@ describe("Page", () => {
               value: [
                 "Ordered1",
                 "Ordered2",
-              ]
+              ],
             },
             {
               type: "unorderedList",
               value: [
                 "Unordered1",
                 "Unordered2",
-              ]
+              ],
             },
           ],
         },
@@ -130,7 +130,7 @@ describe("Page", () => {
         <BlogProvider value={{ setBlog, blog }}>
           <Page/>
         </BlogProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     screen.getByText(text => text.includes("1. Ordered1"));
@@ -149,8 +149,8 @@ describe("Page", () => {
           content: [
             "First paragraph text",
             "Second paragraph text",
-          ]
-        }
+          ],
+        },
       ],
     };
     const setBlog = jest.fn(callback => { blog = callback(blog); });
@@ -163,7 +163,7 @@ describe("Page", () => {
             <Page/>
           </BlogProvider>
         </EditModeProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.queryByText("First paragraph text")).toBeInTheDocument();
@@ -184,8 +184,8 @@ describe("Page", () => {
           content: [
             "Second paragraph text",
             "",
-          ]
-        }
+          ],
+        },
       ],
     });
   });
@@ -200,8 +200,8 @@ describe("Page", () => {
           content: [
             "First paragraph text",
             "Second paragraph text",
-          ]
-        }
+          ],
+        },
       ],
     };
     const setBlog = jest.fn(callback => { blog = callback(blog); });
@@ -214,7 +214,7 @@ describe("Page", () => {
             <Page/>
           </BlogProvider>
         </EditModeProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.queryByText("Title")).toBeInTheDocument();
@@ -244,9 +244,9 @@ describe("Page", () => {
           content: [
             "First paragraph text",
             "Second paragraph text",
-          ]
-        }
+          ],
+        },
       ],
-    })
+    });
   });
 });

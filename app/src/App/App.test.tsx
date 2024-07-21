@@ -14,7 +14,7 @@ const testBlog: BlogConfig = {
       showInNav: true,
       content: [
         "Hello world",
-      ]
+      ],
     },
     {
       path: "/about",
@@ -22,7 +22,7 @@ const testBlog: BlogConfig = {
       showInNav: true,
       content: [
         "The about page",
-      ]
+      ],
     },
     {
       path: "/hidden",
@@ -31,7 +31,7 @@ const testBlog: BlogConfig = {
       content: [
         "Hidden content",
       ],
-    }
+    },
   ],
 };
 
