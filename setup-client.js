@@ -77,29 +77,63 @@ const createMessageManager = (appId, responseListener) => {
   };
 };
 
-const createClient = async () => {
-  const search = new URLSearchParams(window.location.search);
-  const appId = search.get("appId");
-  console.log("client", {appId});
-  const responseListener = createResponseListener();
-  const { sendMessage } = createMessageManager(appId, responseListener);
-  const { functionNames } = await sendMessage({
-    functionName: "__setup__",
-    args: [],
+const createAppIdManager = () => {
+  let resolve;
+
+  const appIdPromise = new Promise(r => {
+    resolve = r;
   });
 
-  const client = {};
-  functionNames.forEach(functionName => {
-    client[functionName] = (...args) => (
-      sendMessage({
-        functionName,
-        args,
-      })
-    );
-  });
-
-  return client;
+  return {
+    getAppId: () => appIdPromise,
+    setAppId: (id) => {
+      resolve(id)
+    },
+  };
 };
 
+const createApis = () => {
+  const { getAppId, setAppId } = createAppIdManager();
+  const search = new URLSearchParams(window.location.search);
+  const queryParamAppId = search.get("appId");
+  if (queryParamAppId) {
+    setAppId(queryParamAppId);
+  }
+  return {
+    createClient: async () => {
+      const appId = await getAppId();
+      console.log("client", {appId});
+      const responseListener = createResponseListener();
+      const { sendMessage } = createMessageManager(appId, responseListener);
+      const { functionNames } = await sendMessage({
+        functionName: "__setup__",
+        args: [],
+      });
+
+      const client = {};
+      functionNames.forEach(functionName => {
+        client[functionName] = (...args) => (
+          sendMessage({
+            functionName,
+            args,
+          })
+        );
+      });
+      return client;
+    },
+    setAppId: (id) => {
+      console.log({id});
+      if (queryParamAppId) {
+        console.error("Query param appId already set");
+        return;
+      }
+
+      setAppId(id);
+    },
+  };
+};
+
+const { createClient, setAppId } = createApis();
 const client = createClient();
 window.getClient = () => client;
+window.setAppId = setAppId;
